@@ -58,12 +58,15 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: {
+    // Generated from public/logo/mvp-icon.png. The previous set was the v0
+    // scaffold's own logo, including an icon.svg that browsers preferred over
+    // everything else — that file is gone rather than left to win the cascade.
     icon: [
-      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
-      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+      { url: '/icon-light-32x32.png', type: 'image/png', sizes: '32x32', media: '(prefers-color-scheme: light)' },
+      { url: '/icon-dark-32x32.png', type: 'image/png', sizes: '32x32', media: '(prefers-color-scheme: dark)' },
     ],
-    apple: '/apple-icon.png',
+    apple: { url: '/apple-icon.png', sizes: '180x180' },
   },
 }
 

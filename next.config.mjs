@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // Image optimisation is on. It was previously disabled, which meant every
+  // photograph shipped at full resolution in its original format — costly once
+  // the site grew to eight routes of imagery. All images are local, so no
+  // remotePatterns are needed.
   images: {
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
   },
   async headers() {
     return [

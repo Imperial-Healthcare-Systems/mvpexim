@@ -1,0 +1,79 @@
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
+import type { ReactNode } from 'react'
+
+import { Container } from '@/components/primitives/container'
+import { Overline } from '@/components/primitives/typography'
+import { cn } from '@/lib/utils'
+
+/**
+ * The navy masthead that opens every route except Home.
+ *
+ * This is load-bearing, not decorative: the site header is transparent with
+ * WHITE text until you scroll 80px, which only reads against a dark backdrop.
+ * Home gets that from its hero; every other page gets it from here. A light
+ * page top would render white nav links on near-white.
+ */
+export function PageHeader({
+  overline,
+  title,
+  lede,
+  breadcrumb,
+  children,
+}: {
+  overline?: string
+  title: ReactNode
+  lede?: ReactNode
+  breadcrumb?: { label: string; href: string }[]
+  children?: ReactNode
+}) {
+  return (
+    <header className="relative isolate overflow-hidden bg-surface-dark pt-32 pb-16 lg:pt-40 lg:pb-24">
+      {/* Soft radial lift so the flat navy doesn't read as a solid slab. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(90rem_40rem_at_15%_-10%,oklch(0.42_0.08_258/0.55),transparent_60%)]"
+      />
+
+      <Container>
+        {breadcrumb && breadcrumb.length > 0 && (
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex flex-wrap items-center gap-1.5 text-caption text-on-dark-subtle">
+              {breadcrumb.map((crumb, i) => (
+                <li key={crumb.href} className="flex items-center gap-1.5">
+                  {i > 0 && <ChevronRight aria-hidden="true" className="size-3.5" />}
+                  <Link
+                    href={crumb.href}
+                    className={cn(
+                      'rounded outline-none transition-colors hover:text-on-dark',
+                      'focus-visible:ring-2 focus-visible:ring-on-dark',
+                    )}
+                  >
+                    {crumb.label}
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
+        {overline && <Overline tone="dark">{overline}</Overline>}
+
+        <h1
+          className={cn(
+            'max-w-4xl font-serif text-display-lg font-semibold text-balance text-on-dark',
+            overline && 'mt-4',
+          )}
+        >
+          {title}
+        </h1>
+
+        {lede && (
+          <p className="mt-6 max-w-2xl text-lede text-pretty text-on-dark-muted">{lede}</p>
+        )}
+
+        {children && <div className="mt-10">{children}</div>}
+      </Container>
+    </header>
+  )
+}

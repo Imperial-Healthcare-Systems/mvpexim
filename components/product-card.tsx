@@ -7,7 +7,7 @@ import { ArrowUpRight, Clock } from 'lucide-react'
 import { PlaceholderImage } from '@/components/primitives/placeholder-image'
 import { Pill } from '@/components/primitives/surface'
 import { LIFT_SPRING } from '@/lib/motion'
-import type { Product } from '@/lib/site-data'
+import { type Product, plannedLineNote } from '@/lib/site-data'
 import { cn } from '@/lib/utils'
 
 export function ProductCard({
@@ -78,20 +78,39 @@ export function ProductCard({
           </div>
         )}
 
-        <Link
-          href={href}
-          className={cn(
-            'mt-6 inline-flex items-center gap-1.5 self-start rounded text-body font-semibold text-brand-accent outline-none',
-            'transition-colors hover:text-surface-dark focus-visible:ring-2 focus-visible:ring-ring',
-          )}
-        >
-          {product.detailPage ? 'View specifications' : 'Register your interest'}
-          <ArrowUpRight
-            aria-hidden="true"
-            className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          />
-          <span className="sr-only"> — {product.name}</span>
-        </Link>
+        {/* Planned lines have no specifications to show — the questionnaire
+            leaves every field TBD. Rather than render an empty card that the
+            equal-height grid stretches into a void, say why it's empty. */}
+        {!available && (
+          <div className="mt-5 rounded-xl border border-dashed border-line-strong bg-surface-sunken/60 p-4">
+            <div className="flex items-center gap-2 text-overline uppercase text-ink-subtle">
+              <Clock aria-hidden="true" className="size-3.5" />
+              In development
+            </div>
+            <p className="mt-2 text-caption text-pretty text-ink-muted">{plannedLineNote}</p>
+          </div>
+        )}
+
+        {/* mt-auto on the wrapper pins the CTA to the card floor so it lines up
+            across the row whatever each card contains. The spacing lives on the
+            wrapper, not the link, so the link's hit area and focus ring stay
+            tight to its text. */}
+        <div className="mt-auto pt-6">
+          <Link
+            href={href}
+            className={cn(
+              'inline-flex items-center gap-1.5 rounded text-body font-semibold text-brand-accent outline-none',
+              'transition-colors hover:text-surface-dark focus-visible:ring-2 focus-visible:ring-ring',
+            )}
+          >
+            {product.detailPage ? 'View specifications' : 'Register your interest'}
+            <ArrowUpRight
+              aria-hidden="true"
+              className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+            <span className="sr-only"> — {product.name}</span>
+          </Link>
+        </div>
       </div>
     </motion.article>
   )

@@ -214,6 +214,15 @@ export function getProductBySlug(slug: string) {
   return products.find((product) => product.slug === slug)
 }
 
+/**
+ * Shown on cards for lines that are planned but not yet confirmed. The intake
+ * questionnaire marks textiles, leather and polymers with a "P" (planned) and
+ * leaves every specification field as TBD, so there is genuinely nothing to
+ * publish yet — this says so plainly rather than leaving a blank card.
+ */
+export const plannedLineNote =
+  'HS code, packing and monthly capacity are published only once a line is confirmed. Register your interest and we will come to you with full specifications when this one is ready.'
+
 export const ports = [
   { name: 'JNPT', type: 'Sea Port', region: 'Nhava Sheva, Maharashtra' },
   { name: 'Mundra', type: 'Sea Port', region: 'Kutch, Gujarat' },

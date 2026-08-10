@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Menu, MessageCircle } from 'lucide-react'
+import { Menu, MessageCircle, Phone } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -16,7 +16,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from '@/components/ui/sheet'
-import { navLinks, siteConfig } from '@/lib/site-data'
+import { navLinks, secondaryLinks, siteConfig } from '@/lib/site-data'
 import { cn } from '@/lib/utils'
 
 /** Scroll distance after which the header swaps to its solid state. */
@@ -152,7 +152,9 @@ export function SiteHeader() {
             </span>
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+          {/* xl, not lg: six nav items plus the phone CTA overflow a 1024px
+              viewport. Below xl the sheet takes over. */}
+          <nav aria-label="Primary" className="hidden items-center gap-7 xl:flex">
             {navLinks.map((link) => {
               const active = isActive(pathname, link.href)
               return (
@@ -188,23 +190,10 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <Button
-              variant="outline"
-              size="cta"
-              nativeButton={false}
-              className={cn(
-                'motion-safe:transition-colors motion-safe:duration-300',
-                !solid &&
-                  'border-line-on-dark bg-transparent text-on-dark hover:bg-on-dark/15 hover:text-on-dark focus-visible:border-on-dark focus-visible:ring-on-dark/70',
-              )}
-              render={
-                <a href={siteConfig.whatsappHref} target="_blank" rel="noopener noreferrer" />
-              }
-            >
-              <MessageCircle data-icon="inline-start" />
-              WhatsApp
-            </Button>
+          {/* §10.2 ranks a direct call as the primary action, so the header
+              carries the number itself rather than a form link. WhatsApp is
+              always reachable via the floating button. */}
+          <div className="hidden items-center gap-3 xl:flex">
             <Button
               size="cta"
               nativeButton={false}
@@ -212,9 +201,10 @@ export function SiteHeader() {
                 'motion-safe:transition-[box-shadow] motion-safe:duration-300',
                 !solid && 'ring-1 ring-on-dark/35 focus-visible:ring-on-dark/70',
               )}
-              render={<Link href="/contact" />}
+              render={<a href={siteConfig.phoneHref} />}
             >
-              Get a Quote
+              <Phone data-icon="inline-start" />
+              {siteConfig.phone}
             </Button>
           </div>
 
@@ -228,7 +218,7 @@ export function SiteHeader() {
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    'lg:hidden motion-safe:transition-colors motion-safe:duration-300',
+                    'xl:hidden motion-safe:transition-colors motion-safe:duration-300',
                     solid
                       ? 'text-surface-dark hover:bg-muted hover:text-surface-dark'
                       : 'text-on-dark hover:bg-on-dark/15 hover:text-on-dark aria-expanded:bg-on-dark/15 aria-expanded:text-on-dark focus-visible:ring-on-dark/70',
@@ -262,7 +252,20 @@ export function SiteHeader() {
                   )
                 })}
               </nav>
+              <div className="mt-2 border-t border-line px-4 pt-4">
+                {secondaryLinks.map((link) => (
+                  <SheetClose key={link.href} render={<Link href={link.href} />}>
+                    <span className="block rounded-md px-2 py-3 text-body font-medium text-ink-muted transition-colors hover:bg-surface-sunken hover:text-brand-accent">
+                      {link.label}
+                    </span>
+                  </SheetClose>
+                ))}
+              </div>
               <div className="mt-4 flex flex-col gap-3 px-4">
+                <Button size="cta" nativeButton={false} render={<a href={siteConfig.phoneHref} />}>
+                  <Phone data-icon="inline-start" />
+                  {siteConfig.phone}
+                </Button>
                 <Button
                   variant="outline"
                   size="cta"
@@ -276,8 +279,8 @@ export function SiteHeader() {
                 </Button>
                 <SheetClose
                   render={
-                    <Button size="cta" nativeButton={false} render={<Link href="/contact" />}>
-                      Get a Quote
+                    <Button variant="ghost" size="cta" nativeButton={false} render={<Link href="/contact" />}>
+                      Send an enquiry
                     </Button>
                   }
                 />

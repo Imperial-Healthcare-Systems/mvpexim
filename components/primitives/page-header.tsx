@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 
 import { Container } from '@/components/primitives/container'
 import { Overline } from '@/components/primitives/typography'
+import { siteConfig } from '@/lib/site-data'
 import { cn } from '@/lib/utils'
 
 /**
@@ -27,8 +28,42 @@ export function PageHeader({
   breadcrumb?: { label: string; href: string }[]
   children?: ReactNode
 }) {
+  /**
+   * BreadcrumbList structured data, derived from the same array that renders
+   * the visible trail — so the two can never drift. The current page is
+   * appended as the final item, which is what Google expects for a rich
+   * breadcrumb result. `title` is used only when it is a plain string;
+   * ReactNode titles are skipped rather than stringified into markup.
+   */
+  const breadcrumbJsonLd =
+    breadcrumb && breadcrumb.length > 0 && typeof title === 'string'
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            ...breadcrumb.map((crumb, i) => ({
+              '@type': 'ListItem',
+              position: i + 1,
+              name: crumb.label,
+              item: new URL(crumb.href, siteConfig.url).toString(),
+            })),
+            {
+              '@type': 'ListItem',
+              position: breadcrumb.length + 1,
+              name: title,
+            },
+          ],
+        }
+      : null
+
   return (
     <header className="relative isolate overflow-hidden bg-surface-dark pt-32 pb-16 lg:pt-40 lg:pb-24">
+      {breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+      )}
       {/* Soft radial lift so the flat navy doesn't read as a solid slab. */}
       <div
         aria-hidden="true"
@@ -61,7 +96,7 @@ export function PageHeader({
 
         <h1
           className={cn(
-            'max-w-4xl font-serif text-display-lg font-semibold text-balance text-on-dark',
+            'max-w-4xl font-serif text-display-lg font-bold text-balance text-on-dark',
             overline && 'mt-4',
           )}
         >

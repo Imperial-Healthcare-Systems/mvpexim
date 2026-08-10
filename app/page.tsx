@@ -1,16 +1,34 @@
 import Link from 'next/link'
-import { Anchor, ArrowRight, Eye, Globe2, Handshake, MessageSquareText, ShieldCheck } from 'lucide-react'
+import {
+  Anchor,
+  ArrowRight,
+  Eye,
+  Globe2,
+  Handshake,
+  MessageSquareText,
+  Phone,
+  ShieldCheck,
+} from 'lucide-react'
 
 import { PlaceholderImage } from '@/components/primitives/placeholder-image'
 import { Reveal, Stagger, StaggerItem } from '@/components/primitives/reveal'
 import { Section } from '@/components/primitives/section'
 import { Card, Pill, Stat } from '@/components/primitives/surface'
-import { Prose, SectionHeading } from '@/components/primitives/typography'
+import { Overline, Prose, SectionHeading } from '@/components/primitives/typography'
 import { ProductCard } from '@/components/product-card'
 import { CtaBand } from '@/components/sections/cta-band'
 import { HomeHero } from '@/components/sections/home-hero'
 import { Button } from '@/components/ui/button'
-import { differentiators, markets, operatingModel, ports, products, story } from '@/lib/site-data'
+import {
+  differentiators,
+  marketReach,
+  operatingModel,
+  ports,
+  products,
+  siteConfig,
+  story,
+  tradeStatus,
+} from '@/lib/site-data'
 
 const differentiatorIcons = [Eye, Handshake, ShieldCheck, MessageSquareText]
 
@@ -45,7 +63,7 @@ export default function HomePage() {
 
           <Reveal delay={0.1}>
             <PlaceholderImage
-              src="/images/story-farm.png"
+              src="/images/story-farm.jpg"
               alt="Growers sorting freshly harvested coconuts at a farm near Pollachi, Tamil Nadu"
               label="Coconut sorting at a Pollachi farm"
               width={1200}
@@ -91,7 +109,7 @@ export default function HomePage() {
               tone="dark"
               overline="Global Reach"
               title="Shipping from Indian ports to buyers across the world."
-              lede={`We load through ${ports.map((p) => p.name).join(', ')} and currently serve ${markets.length} active buyer markets.`}
+              lede={`We load through ${ports.map((p) => p.name).join(', ')} and export to ${marketReach.exportTo.join(', ')}, with ${marketReach.openingNext.join(' and ')} opening next.`}
             />
             <Button
               variant="on-dark"
@@ -124,12 +142,15 @@ export default function HomePage() {
                   Markets served
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {markets.map((market) => (
+                  {marketReach.exportTo.map((market) => (
                     <Pill key={market} tone="outline-dark">
                       {market}
                     </Pill>
                   ))}
                 </div>
+                <p className="mt-4 text-caption text-on-dark-subtle">
+                  {tradeStatus.shipments}.
+                </p>
               </Card>
             </StaggerItem>
           </Stagger>
@@ -183,6 +204,77 @@ export default function HomePage() {
                 How we work
                 <ArrowRight data-icon="inline-end" />
               </Button>
+            </div>
+          </Card>
+        </Reveal>
+      </Section>
+
+      {/* §10.1 ranks "attract suppliers, growers and sourcing partners" as the
+          website's number-one job — ahead of buyer enquiries. Everything above
+          this point speaks to buyers, so this block speaks to the other side of
+          the trade. Built only from answers already given: the fair-dealing
+          value (§5.6), the merchant-exporter model (§5.1) and the traceability
+          statement (§9). */}
+      <Section tone="sunken">
+        <Reveal>
+          <Card className="lg:p-12">
+            <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+              <div>
+                <Overline>Growers &amp; Suppliers</Overline>
+                <h2 className="mt-3 max-w-xl font-serif text-display-sm font-bold text-balance text-surface-dark">
+                  If you grow it or make it, we are looking for you too.
+                </h2>
+                <p className="mt-5 max-w-xl text-body-lg text-pretty text-ink-muted">
+                  We are a merchant exporter — we do not own farms or factories, so
+                  every container we ship starts with a producer who does. If you have
+                  quality product and want a route to overseas buyers, we would like to
+                  hear from you.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <Button size="cta" nativeButton={false} render={<a href={siteConfig.phoneHref} />}>
+                    <Phone data-icon="inline-start" />
+                    {siteConfig.phone}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="cta"
+                    nativeButton={false}
+                    render={<Link href="/contact" />}
+                  >
+                    Introduce your product
+                    <ArrowRight data-icon="inline-end" />
+                  </Button>
+                </div>
+              </div>
+
+              <ul className="flex flex-col gap-5 border-line lg:border-l lg:pl-12">
+                {[
+                  {
+                    title: 'Fair dealing, stated plainly',
+                    detail:
+                      'Transparency with growers, suppliers and buyers is our cornerstone — it is one of our five values, not a line on a wall.',
+                  },
+                  {
+                    title: 'One shared record',
+                    detail:
+                      'From source to dispatch we work on a single platform with real-time data, so you can see where your consignment is.',
+                  },
+                  {
+                    title: 'Honest specification',
+                    detail:
+                      'We do not oversell a grade to a buyer, which means we will not ask you to supply one.',
+                  },
+                ].map((item) => (
+                  <li key={item.title}>
+                    <h3 className="font-serif text-heading-sm font-semibold text-surface-dark">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1.5 text-body text-pretty text-ink-muted">
+                      {item.detail}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </Card>
         </Reveal>

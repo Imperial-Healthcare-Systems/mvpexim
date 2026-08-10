@@ -1,22 +1,41 @@
 import type { Metadata } from 'next'
-import { Eye, FileCheck, Handshake, MessageSquareText, ShieldCheck } from 'lucide-react'
+import Link from 'next/link'
+import {
+  ArrowRight,
+  Banknote,
+  Eye,
+  FileCheck,
+  Handshake,
+  MessageSquareText,
+  ShieldCheck,
+} from 'lucide-react'
 
 import { PageHeader } from '@/components/primitives/page-header'
 import { Reveal, Stagger, StaggerItem } from '@/components/primitives/reveal'
 import { Section } from '@/components/primitives/section'
-import { Card, Pill } from '@/components/primitives/surface'
+import { Card, Pill, SpecList } from '@/components/primitives/surface'
 import { SectionHeading } from '@/components/primitives/typography'
 import { CtaBand } from '@/components/sections/cta-band'
-import { TRADE_TERMS, differentiators, incoterms, operatingModel, values } from '@/lib/site-data'
+import { Button } from '@/components/ui/button'
+import {
+  TRADE_TERMS,
+  differentiators,
+  documentsProvided,
+  incotermsDetail,
+  operations,
+  operatingModel,
+  paymentTerms,
+  values,
+} from '@/lib/site-data'
 
 export const metadata: Metadata = {
-  title: 'Why Us & Trade Terms',
+  title: 'Trade Terms & How We Work',
   description:
-    'Incoterms EXW, FOB, CIF and DDP. Minimum order one 40ft container. How MVP Exim works, what we publish upfront, and why buyers open our offers.',
+    'Incoterms EXW, FOB, CIF (default) and DDP. Payment by advance TT, LC at sight, DP or usance LC. 30–45 day lead time, MOQ one 40ft container, full documentation with every shipment.',
   openGraph: {
-    title: 'Why MVP Exim | Trade Terms',
+    title: 'Trade Terms | MVP Exim',
     description:
-      'Our Incoterms, MOQ, payment and documentation terms — published plainly so you can qualify us in one read.',
+      'Incoterms, payment terms, lead time and documentation — published plainly so you can qualify us in one read.',
     url: '/why-us',
   },
   alternates: { canonical: '/why-us' },
@@ -29,10 +48,19 @@ export default function WhyUsPage() {
     <>
       <PageHeader
         breadcrumb={[{ label: 'Home', href: '/' }]}
-        overline="Why MVP Exim"
+        overline="Trade Terms & Why Us"
         title="A buyer sees a dozen near-identical offers a week. Here is why they open ours."
         lede="We publish our terms, our capacity and our limitations upfront. It saves a round of email on every enquiry — and tells you straight away whether we can serve you."
-      />
+      >
+        <div className="flex flex-wrap gap-2">
+          {incotermsDetail.map((term) => (
+            <Pill key={term.code} tone={term.isDefault ? 'gold' : 'outline-dark'}>
+              {term.code}
+              {term.isDefault && <span className="opacity-80">· default</span>}
+            </Pill>
+          ))}
+        </div>
+      </PageHeader>
 
       <Section>
         <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -64,7 +92,7 @@ export default function WhyUsPage() {
         </Reveal>
       </Section>
 
-      {/* Trade terms */}
+      {/* Trade terms grid */}
       <Section tone="sunken">
         <Reveal>
           <SectionHeading
@@ -74,7 +102,7 @@ export default function WhyUsPage() {
           />
         </Reveal>
 
-        <Stagger className="mt-12 grid gap-6 sm:grid-cols-2">
+        <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TRADE_TERMS.map((term) => (
             <StaggerItem key={term.label} className="h-full">
               <Card className="h-full">
@@ -89,42 +117,109 @@ export default function WhyUsPage() {
             </StaggerItem>
           ))}
         </Stagger>
+      </Section>
 
-        <Reveal delay={0.1} className="mt-12">
-          <Card className="lg:p-10">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-md">
-                <div className="flex items-center gap-3">
-                  <FileCheck aria-hidden="true" className="size-5 text-brand-accent" />
-                  <h3 className="font-serif text-heading font-semibold text-surface-dark">
-                    Incoterms we quote on
-                  </h3>
-                </div>
-                <p className="mt-3 text-body text-ink-muted">
-                  Choose the level of responsibility that suits your operation, and we
-                  will price against it.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {incoterms.map((term) => (
-                  <span
-                    key={term}
-                    className="rounded-full border border-brand-accent/30 bg-brand-accent/5 px-5 py-2 font-serif text-body font-semibold text-brand-accent"
-                  >
-                    {term}
-                  </span>
-                ))}
-              </div>
+      {/* Incoterms + payment */}
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <Reveal>
+            <div className="flex items-center gap-3">
+              <FileCheck aria-hidden="true" className="size-5 text-brand-accent" />
+              <h2 className="font-serif text-heading font-semibold text-surface-dark">
+                Incoterms we quote on
+              </h2>
             </div>
-          </Card>
-        </Reveal>
+            <p className="mt-3 text-body text-ink-muted">
+              Choose the level of responsibility that suits your operation and we will
+              price against it. CIF is our default where you have no preference.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {incotermsDetail.map((term) => (
+                <li
+                  key={term.code}
+                  className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-line pt-3"
+                >
+                  <span className="font-serif text-heading-sm font-semibold text-brand-accent">
+                    {term.code}
+                  </span>
+                  <span className="text-body text-ink">{term.name}</span>
+                  {term.isDefault && <Pill tone="accent">Our default</Pill>}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="flex items-center gap-3">
+              <Banknote aria-hidden="true" className="size-5 text-brand-accent" />
+              <h2 className="font-serif text-heading font-semibold text-surface-dark">
+                Payment terms we accept
+              </h2>
+            </div>
+            <p className="mt-3 text-body text-ink-muted">
+              Agreed per order. Terms marked for established buyers are available once
+              we have traded together.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {paymentTerms.map((item) => (
+                <li
+                  key={item.term}
+                  className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-line pt-3"
+                >
+                  <span className="text-body text-ink">{item.term}</span>
+                  {item.note && <Pill>{item.note}</Pill>}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* Operations + documents */}
+      <Section tone="dark">
+        <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+          <Reveal>
+            <SectionHeading
+              tone="dark"
+              overline="Operations"
+              title="The numbers behind a shipment"
+            />
+            <div className="mt-10">
+              <SpecList items={operations} columns={2} tone="dark" />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <Card tone="dark">
+              <h2 className="font-serif text-heading-sm font-semibold text-on-dark">
+                Documents with every shipment
+              </h2>
+              <ul className="mt-5 space-y-2">
+                {documentsProvided.map((doc) => (
+                  <li key={doc} className="text-body text-on-dark-muted">
+                    {doc}
+                  </li>
+                ))}
+              </ul>
+              <Button
+                variant="on-dark"
+                size="cta"
+                className="mt-7"
+                nativeButton={false}
+                render={<Link href="/quality" />}
+              >
+                Quality &amp; certifications
+                <ArrowRight data-icon="inline-end" />
+              </Button>
+            </Card>
+          </Reveal>
+        </div>
       </Section>
 
       {/* Values */}
-      <Section tone="dark">
+      <Section tone="sunken">
         <Reveal>
           <SectionHeading
-            tone="dark"
             overline="What We Stand For"
             title="Five values, and how each shows up in practice."
           />
@@ -133,13 +228,11 @@ export default function WhyUsPage() {
         <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {values.map((value) => (
             <StaggerItem key={value.title} className="h-full">
-              <Card tone="dark" className="h-full">
-                <h3 className="font-serif text-heading-sm font-semibold text-on-dark">
+              <Card className="h-full">
+                <h3 className="font-serif text-heading-sm font-semibold text-surface-dark">
                   {value.title}
                 </h3>
-                <p className="mt-2 text-body text-pretty text-on-dark-muted">
-                  {value.detail}
-                </p>
+                <p className="mt-2 text-body text-pretty text-ink-muted">{value.detail}</p>
               </Card>
             </StaggerItem>
           ))}

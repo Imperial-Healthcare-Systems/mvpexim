@@ -1,18 +1,21 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 import { PageHeader } from '@/components/primitives/page-header'
-import { Reveal, Stagger, StaggerItem } from '@/components/primitives/reveal'
+import { Reveal } from '@/components/primitives/reveal'
 import { Section } from '@/components/primitives/section'
 import { Card, Pill } from '@/components/primitives/surface'
 import { SectionHeading } from '@/components/primitives/typography'
-import { ProductCard } from '@/components/product-card'
+import { ProductFinder } from '@/components/product-finder'
 import { CtaBand } from '@/components/sections/cta-band'
-import { incoterms, products } from '@/lib/site-data'
+import { Button } from '@/components/ui/button'
+import { incotermsDetail, products } from '@/lib/site-data'
 
 export const metadata: Metadata = {
   title: 'Products & Commodities',
   description:
-    'Semi-husked coconut (HS 0801 19 10) is our flagship export line. Textiles and yarn, leather and footwear, and plastics and polymers are in development.',
+    'Semi-husked coconut (HS 0801 19 10) is our flagship export line — biscuit-colour grade from Tamil Nadu. Textiles and yarn, leather and footwear, and plastics and polymers are in development.',
   openGraph: {
     title: 'Products & Commodities | MVP Exim',
     description:
@@ -23,9 +26,6 @@ export const metadata: Metadata = {
 }
 
 export default function ProductsPage() {
-  const available = products.filter((p) => p.status === 'available')
-  const upcoming = products.filter((p) => p.status === 'coming-soon')
-
   return (
     <>
       <PageHeader
@@ -35,9 +35,10 @@ export default function ProductsPage() {
         lede="Semi-husked coconut is our flagship line today. Textiles, leather and polymers are next, as we grow from merchant exporter toward a full trading house."
       >
         <div className="flex flex-wrap gap-2">
-          {incoterms.map((term) => (
-            <Pill key={term} tone="gold">
-              {term}
+          {incotermsDetail.map((term) => (
+            <Pill key={term.code} tone={term.isDefault ? 'gold' : 'outline-dark'}>
+              {term.code}
+              {term.isDefault && <span className="opacity-80">· default</span>}
             </Pill>
           ))}
         </div>
@@ -46,47 +47,64 @@ export default function ProductsPage() {
       <Section>
         <Reveal>
           <SectionHeading
-            overline="Shipping Now"
-            title="Available lines"
+            overline="Find a Line"
+            title="Search by product or HS code"
             lede="Full specifications, container loading and certification are published on each product page."
           />
         </Reveal>
 
-        <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {available.map((product, i) => (
-            <StaggerItem key={product.id} className="h-full">
-              <ProductCard product={product} priority={i === 0} />
-            </StaggerItem>
-          ))}
-        </Stagger>
+        <Reveal delay={0.1} className="mt-10">
+          <ProductFinder products={products} />
+        </Reveal>
       </Section>
 
       <Section tone="sunken">
-        <Reveal>
-          <SectionHeading
-            overline="In Development"
-            title="Lines we are building next"
-            lede="These are planned product groups, not current stock. Specifications, HS codes and capacity are not yet confirmed — register your interest and we will come to you when they are."
-          />
-        </Reveal>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Reveal>
+            <Card className="h-full">
+              <h2 className="font-serif text-heading font-semibold text-surface-dark">
+                Packing and container loading
+              </h2>
+              <p className="mt-3 text-body text-pretty text-ink-muted">
+                12.5 kg mesh bags, 14 MT to a 40ft container, minimum one container.
+                We handle 20ft, 40ft and 40ft HC.
+              </p>
+              <Button
+                size="cta"
+                variant="outline"
+                className="mt-6"
+                nativeButton={false}
+                render={<Link href="/packaging" />}
+              >
+                Packaging details
+                <ArrowRight data-icon="inline-end" />
+              </Button>
+            </Card>
+          </Reveal>
 
-        <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {upcoming.map((product) => (
-            <StaggerItem key={product.id} className="h-full">
-              <ProductCard product={product} />
-            </StaggerItem>
-          ))}
-        </Stagger>
-
-        <Reveal delay={0.1} className="mt-10">
-          <Card>
-            <p className="text-body text-ink-muted">
-              Looking for something not listed here? As a merchant exporter we can
-              often source against a specific requirement. Tell us the product, grade
-              and destination, and we will tell you plainly whether we can serve it.
-            </p>
-          </Card>
-        </Reveal>
+          <Reveal delay={0.08}>
+            <Card className="h-full">
+              <h2 className="font-serif text-heading font-semibold text-surface-dark">
+                Looking for something not listed?
+              </h2>
+              <p className="mt-3 text-body text-pretty text-ink-muted">
+                As a merchant exporter we can often source against a specific
+                requirement. Tell us the product, grade and destination, and we will
+                tell you plainly whether we can serve it.
+              </p>
+              <Button
+                size="cta"
+                variant="outline"
+                className="mt-6"
+                nativeButton={false}
+                render={<Link href="/contact" />}
+              >
+                Send a sourcing request
+                <ArrowRight data-icon="inline-end" />
+              </Button>
+            </Card>
+          </Reveal>
+        </div>
       </Section>
 
       <CtaBand />

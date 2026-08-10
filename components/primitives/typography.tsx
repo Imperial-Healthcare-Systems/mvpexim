@@ -2,7 +2,12 @@ import type { ElementType, ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 
-/** Small uppercase kicker above a headline. Rust on light, gold on navy. */
+/**
+ * Small uppercase kicker above a headline, with a short rule to its left.
+ * The rule is a traditional editorial device — §11.1 marks the brand
+ * "established and traditional" 1/5 and "craft and selectivity" 5/5.
+ * Rust on light surfaces, gold on navy.
+ */
 export function Overline({
   children,
   className,
@@ -15,11 +20,12 @@ export function Overline({
   return (
     <p
       className={cn(
-        'text-overline uppercase',
+        'flex items-center gap-3 text-overline uppercase',
         tone === 'dark' ? 'text-gold' : 'text-brand-accent',
         className,
       )}
     >
+      <span aria-hidden="true" className="h-px w-7 shrink-0 bg-current opacity-70" />
       {children}
     </p>
   )
@@ -64,7 +70,7 @@ export function SectionHeading({
       {overline && <Overline tone={tone}>{overline}</Overline>}
       <Tag
         className={cn(
-          'font-serif font-semibold text-balance',
+          'font-serif font-bold text-balance',
           sizeClass,
           overline && 'mt-3',
           tone === 'dark' ? 'text-on-dark' : 'text-surface-dark',

@@ -1,7 +1,8 @@
-import { Analytics } from '@vercel/analytics/next'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Fraunces, Inter } from 'next/font/google'
 
+import { Analytics } from '@/components/analytics'
 import { MotionProvider } from '@/components/motion-provider'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
@@ -35,11 +36,12 @@ export const metadata: Metadata = {
   description,
   applicationName: siteConfig.brandName,
   authors: [{ name: siteConfig.legalName }],
+  // §10.8 names "Coconut exporter India" as the priority search term.
   keywords: [
+    'coconut exporter India',
     'semi-husked coconut exporter',
     'HS code 0801 19 10',
     'Indian merchant exporter',
-    'coconut exporter India',
     'MVP Exim',
     'export from Bangalore',
   ],
@@ -50,13 +52,29 @@ export const metadata: Metadata = {
     title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
     description,
     url: siteConfig.url,
+    // A static card, not a generated one. `next/og` fails to initialise under
+    // Next 16 + Turbopack here ("Input buffer contains unsupported image
+    // format", with or without an embedded image), and since the card is
+    // identical on every route, runtime generation bought nothing but a
+    // failure mode. Regenerate with scripts/make-og.ps1 if the brand changes.
+    images: [
+      {
+        url: '/og.png',
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.brandName} — ${siteConfig.tagline}`,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
     description,
+    images: ['/og.png'],
   },
   robots: { index: true, follow: true },
+  // Home's canonical. Every other route sets its own, which overrides this.
+  alternates: { canonical: '/' },
   icons: {
     // Generated from public/logo/mvp-icon.png. The previous set was the v0
     // scaffold's own logo, including an icon.svg that browsers preferred over
@@ -135,7 +153,8 @@ export default function RootLayout({
           <SiteFooter />
           <WhatsAppFab />
         </MotionProvider>
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <Analytics />
+        {process.env.NODE_ENV === 'production' && <VercelAnalytics />}
       </body>
     </html>
   )

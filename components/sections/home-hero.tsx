@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, MessageCircle } from 'lucide-react'
+import { ArrowRight, MessageCircle, Phone } from 'lucide-react'
 
 import { Container } from '@/components/primitives/container'
 import { Stat } from '@/components/primitives/surface'
@@ -28,7 +28,7 @@ export function HomeHero() {
         {/* The LCP element. `priority` emits fetchpriority="high" and a preload
             link; this is the one image on the site that must not lazy-load. */}
         <Image
-          src="/images/hero-port.png"
+          src="/images/hero-port.jpg"
           alt=""
           aria-hidden="true"
           fill
@@ -54,7 +54,7 @@ export function HomeHero() {
             initial="hidden"
             animate="show"
             variants={rise}
-            className="mt-7 font-serif text-display-xl font-semibold text-balance text-on-dark"
+            className="mt-7 font-serif text-display-xl font-bold text-balance text-on-dark"
           >
             Our World,
             <br />
@@ -82,9 +82,11 @@ export function HomeHero() {
             variants={rise}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <Button size="cta-lg" nativeButton={false} render={<Link href="/contact" />}>
-              Request a Quote
-              <ArrowRight data-icon="inline-end" />
+            {/* §10.2: a direct call is the client's first choice of action,
+                WhatsApp second, the enquiry form third. */}
+            <Button size="cta-lg" nativeButton={false} render={<a href={siteConfig.phoneHref} />}>
+              <Phone data-icon="inline-start" />
+              {siteConfig.phone}
             </Button>
             <Button
               variant="on-dark"
@@ -97,6 +99,13 @@ export function HomeHero() {
               <MessageCircle data-icon="inline-start" />
               Chat on WhatsApp
             </Button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-1.5 rounded text-body font-semibold text-on-dark underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-on-dark"
+            >
+              Or send an enquiry
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
           </motion.div>
 
           <motion.dl

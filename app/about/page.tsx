@@ -78,7 +78,7 @@ export default function AboutPage() {
 
           <Reveal delay={0.1}>
             <PlaceholderImage
-              src="/images/story-farm.png"
+              src="/images/story-farm.jpg"
               alt="Growers sorting freshly harvested coconuts at a farm near Pollachi, Tamil Nadu"
               label="Coconut sorting at a Pollachi farm"
               width={1200}
@@ -102,10 +102,14 @@ export default function AboutPage() {
       <Section tone="sunken">
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <Reveal>
+            {/* Alt deliberately does not name Nikhil. This slot currently holds
+                a generated, faceless image; captioning a synthetic person as a
+                real named founder would be fabricating their likeness. Restore
+                the naming when a real photograph replaces it. */}
             <PlaceholderImage
-              src="/images/desk-documents.png"
-              alt="Nikhil, founder of MVP Exim, reviewing export documentation and shipping paperwork at his desk"
-              label="Founder portrait / export documentation"
+              src="/images/desk-documents.jpg"
+              alt="Export documentation and shipping paperwork under review at a desk"
+              label="Export documentation"
               width={1200}
               height={900}
               sizes="(min-width: 1024px) 38vw, 100vw"

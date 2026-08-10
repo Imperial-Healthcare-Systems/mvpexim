@@ -8,16 +8,16 @@ import { Section } from '@/components/primitives/section'
 import { Card, Pill } from '@/components/primitives/surface'
 import { SectionHeading } from '@/components/primitives/typography'
 import { CtaBand } from '@/components/sections/cta-band'
-import { markets, ports, siteConfig } from '@/lib/site-data'
+import { marketReach, ports, siteConfig, tradeStatus } from '@/lib/site-data'
 
 export const metadata: Metadata = {
   title: 'Global Reach',
   description:
-    'MVP Exim loads through JNPT, Mundra and Cochin, serving buyers in the United Arab Emirates, the United States and China. Reachable 9:00 AM – 9:00 PM IST in English and Hindi.',
+    'MVP Exim loads through JNPT, Mundra and Cochin, exporting to the United States, the United Arab Emirates and Africa, with the EU opening next. Reachable 9:00 AM – 9:00 PM IST.',
   openGraph: {
     title: 'Global Reach | MVP Exim',
     description:
-      'Ports of loading: JNPT, Mundra, Cochin. Active buyer markets: UAE, USA, China.',
+      'Ports of loading: JNPT, Mundra, Cochin. Export markets: USA, UAE, Africa. EU opening next.',
     url: '/global-reach',
   },
   alternates: { canonical: '/global-reach' },
@@ -30,7 +30,7 @@ export default function GlobalReachPage() {
         breadcrumb={[{ label: 'Home', href: '/' }]}
         overline="Global Reach"
         title="Shipping from Indian ports to buyers across the world."
-        lede={`We load through ${ports.map((p) => p.name).join(', ')} and serve buyers in ${markets.join(', ')}.`}
+        lede={`We load through ${ports.map((p) => p.name).join(', ')} and export to ${marketReach.exportTo.join(', ')}. Our first consignment is in progress — we would rather tell you that than imply a track record you can check.`}
       />
 
       {/* Ports */}
@@ -60,7 +60,7 @@ export default function GlobalReachPage() {
 
         <Reveal delay={0.1} className="mt-12">
           <PlaceholderImage
-            src="/images/containers-aerial.png"
+            src="/images/containers-aerial.jpg"
             alt="Aerial view of a shipping container yard at an Indian port, with stacked containers and gantry cranes"
             label="Container yard at an Indian port"
             width={2400}
@@ -76,14 +76,14 @@ export default function GlobalReachPage() {
         <Reveal>
           <SectionHeading
             tone="dark"
-            overline="Markets We Serve"
-            title="Where our containers go today"
-            lede="These are the markets we actively ship to. We are building relationships in others as the product range widens — we would rather name three honestly than imply thirty."
+            overline="Markets"
+            title="Where we trade"
+            lede={`${marketReach.strongest} is our strongest relationship. We would rather name three markets honestly than imply thirty.`}
           />
         </Reveal>
 
         <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {markets.map((market) => (
+          {marketReach.exportTo.map((market) => (
             <StaggerItem key={market} className="h-full">
               <Card tone="dark" className="h-full">
                 <Globe2 aria-hidden="true" className="size-5 text-gold" />
@@ -91,7 +91,7 @@ export default function GlobalReachPage() {
                   {market}
                 </h3>
                 <p className="mt-1 text-caption uppercase tracking-wide text-on-dark-subtle">
-                  Active buyer market
+                  {market === marketReach.strongest ? 'Strongest market' : 'Export market'}
                 </p>
               </Card>
             </StaggerItem>
@@ -102,12 +102,40 @@ export default function GlobalReachPage() {
                 Opening next
               </h3>
               <p className="mt-2 text-caption text-on-dark-subtle">
-                We are actively building relationships in new markets as our product
-                range grows.
+                {marketReach.openingNext.join(', ')} — we are building relationships
+                there as our product range grows.
               </p>
             </div>
           </StaggerItem>
         </Stagger>
+
+        {/* Import direction: the questionnaire records Australia as a source
+            country, which is the first step toward the trading-house ambition. */}
+        <Reveal delay={0.1} className="mt-6">
+          <Card tone="dark">
+            <h3 className="font-serif text-heading-sm font-semibold text-on-dark">
+              We buy as well as sell
+            </h3>
+            <p className="mt-2 max-w-3xl text-body text-pretty text-on-dark-muted">
+              We currently import from {marketReach.importFrom.join(', ')}. Trading in
+              both directions is how a merchant exporter becomes a trading house, and
+              it is the direction we are heading.
+            </p>
+          </Card>
+        </Reveal>
+
+        <Reveal delay={0.14} className="mt-6">
+          <Card tone="dark" className="border-dashed">
+            <h3 className="font-serif text-heading-sm font-semibold text-on-dark">
+              Where we are today
+            </h3>
+            <p className="mt-2 max-w-3xl text-body text-pretty text-on-dark-muted">
+              {tradeStatus.shipments}. This is our {tradeStatus.yearOne.toLowerCase()},
+              so we publish no volume or track-record claims — only what we can supply
+              and how quickly.
+            </p>
+          </Card>
+        </Reveal>
       </Section>
 
       {/* Working with us across time zones */}

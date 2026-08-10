@@ -80,7 +80,7 @@ export function Stat({
     <div className={className}>
       <div
         className={cn(
-          'tabular font-serif text-display-sm font-semibold',
+          'tabular font-serif text-display-sm font-bold',
           tone === 'dark' ? 'text-on-dark' : 'text-surface-dark',
         )}
       >

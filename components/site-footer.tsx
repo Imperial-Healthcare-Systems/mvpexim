@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 
 import { Container } from '@/components/primitives/container'
-import { CONTACT_INFO, navLinks, ports, siteConfig } from '@/lib/site-data'
+import { CONTACT_INFO, navLinks, ports, secondaryLinks, siteConfig } from '@/lib/site-data'
 
 const linkClass =
   'rounded text-body text-on-dark-muted outline-none transition-colors hover:text-gold focus-visible:ring-2 focus-visible:ring-on-dark'
@@ -55,7 +55,7 @@ export function SiteFooter() {
                   Home
                 </Link>
               </li>
-              {navLinks.map((link) => (
+              {[...navLinks, ...secondaryLinks].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>
                     {link.label}

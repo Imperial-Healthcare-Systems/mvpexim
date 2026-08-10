@@ -11,7 +11,7 @@ export default function NotFound() {
     <section className="flex min-h-[70svh] items-center bg-surface-dark pt-32 pb-20">
       <Container>
         <Overline tone="dark">Error 404</Overline>
-        <h1 className="mt-4 max-w-2xl font-serif text-display-lg font-semibold text-balance text-on-dark">
+        <h1 className="mt-4 max-w-2xl font-serif text-display-lg font-bold text-balance text-on-dark">
           We could not find that page.
         </h1>
         <p className="mt-5 max-w-xl text-lede text-on-dark-muted">

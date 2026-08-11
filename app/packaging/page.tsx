@@ -36,6 +36,8 @@ export default function PackagingPage() {
   return (
     <>
       <PageHeader
+        image="/images/containers-aerial.jpg"
+        imageAlt="A container vessel being loaded alongside a lit terminal, seen from above"
         breadcrumb={[{ label: 'Home', href: '/' }]}
         overline="Packaging & Loading"
         title="How your cargo is packed, stuffed and sealed."

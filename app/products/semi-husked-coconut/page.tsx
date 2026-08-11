@@ -59,6 +59,8 @@ export default function SemiHuskedCoconutPage() {
       />
 
       <PageHeader
+        image="/images/grove-dawn.jpg"
+        imageAlt="Morning light through a coconut plantation of the kind our crop is sourced from"
         breadcrumb={[
           { label: 'Home', href: '/' },
           { label: 'Products', href: '/products' },

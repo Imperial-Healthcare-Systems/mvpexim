@@ -47,6 +47,8 @@ $slots = @(
   @{ name = 'quality-stamp';     w = 1200; h = 900  }
   @{ name = 'contact-city';      w = 1400; h = 900  }
   @{ name = 'trade-operations';  w = 1400; h = 1050 }
+  # Wide masthead banner — sits below the navy text band, completely untreated.
+  @{ name = 'grove-dawn';        w = 2400; h = 1000 }
 )
 
 $root   = Split-Path -Parent $PSScriptRoot

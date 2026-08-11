@@ -29,6 +29,8 @@ export default function ProductsPage() {
   return (
     <>
       <PageHeader
+        image="/images/page-header-bg.jpg"
+        imageAlt="A harbour gantry crane silhouetted against a low sun"
         breadcrumb={[{ label: 'Home', href: '/' }]}
         overline="What We Trade"
         title="Products & commodities"

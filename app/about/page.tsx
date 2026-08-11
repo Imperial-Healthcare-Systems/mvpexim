@@ -29,6 +29,8 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
+        image="/images/grove-dawn.jpg"
+        imageAlt="Morning light through a coconut plantation, the kind of grove our first consignments came from"
         breadcrumb={[{ label: 'Home', href: '/' }]}
         overline="Our Story"
         title="A partnership that started with one coconut shipment to Dubai."

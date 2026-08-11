@@ -48,6 +48,8 @@ export default function WhyUsPage() {
   return (
     <>
       <PageHeader
+        image="/images/page-header-bg.jpg"
+        imageAlt="A harbour gantry crane silhouetted against a low sun"
         breadcrumb={[{ label: 'Home', href: '/' }]}
         overline="Trade Terms & Why Us"
         title="A buyer sees a dozen near-identical offers a week. Here is why they open ours."

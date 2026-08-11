@@ -29,6 +29,8 @@ export default function QualityPage() {
   return (
     <>
       <PageHeader
+        image="/images/desk-documents.jpg"
+        imageAlt="Export paperwork laid out across a desk under warm window light"
         breadcrumb={[{ label: 'Home', href: '/' }]}
         overline="Quality & Compliance"
         title="What we hold, what is in process, and what we will not claim."

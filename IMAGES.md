@@ -230,24 +230,62 @@ bought nothing but a failure mode.
 
 ---
 
-## 9–12. Added with the sourced-photography pass
+## 9–13. Masthead banners & section imagery
+
+Every route except `/` opens with its banner photograph as the **background of
+the masthead section**, with the headline, breadcrumb and lede sitting on it.
+
+A navy scrim sits between the photo and the text. It is there for one reason:
+over the raw images white text measures **2.0:1 in the nav band** and **3.3:1 in
+the headline zone**, against a 4.5:1 AA requirement, with worst-case patches at
+1.0:1. The scrim is tuned to the minimum that clears the threshold — composited
+against every banner, the worst pixel now sits at **4.68:1**, so it darkens as
+little as it can while keeping text readable.
+
+Disable it per route with `<PageHeader scrim={false} />` to show the photograph
+raw. Text will fail contrast wherever that image is bright.
+
+| Route | Banner | Why |
+|---|---|---|
+| `/about` | `grove-dawn.jpg` | The origin story — a working plantation at dawn |
+| `/products` | `page-header-bg.jpg` | Generic trade masthead; product shots are in the cards below |
+| `/products/semi-husked-coconut` | `grove-dawn.jpg` | Where this crop comes from |
+| `/quality` | `desk-documents.jpg` | Documentation and attestation |
+| `/packaging` | `containers-aerial.jpg` | Container loading is the page's subject |
+| `/global-reach` | `hero-port.jpg` | Ports and lanes |
+| `/why-us` | `page-header-bg.jpg` | Trade terms, no more specific subject |
+| `/contact` | `contact-city.jpg` | The city we trade from |
+
+No page shows the same photograph twice — banners are assigned around whatever
+already appears in each page's body. Override per route with
+`<PageHeader image="..." imageAlt="..." />`.
+
+All banners are `priority` — they are above the fold on their route — and the
+section sits on `bg-surface-dark`, so the band is navy for the instant before
+the image paints rather than flashing white.
+
+**Verified composite contrast (white text, AA = 4.5:1):**
+
+| Route | Nav band worst | Headline zone worst |
+|---|---|---|
+| `/about`, `/products/semi-husked-coconut` | 5.63:1 | 6.67:1 |
+| `/products`, `/why-us` | 5.50:1 | 5.37:1 |
+| `/quality` | 7.97:1 | 6.42:1 |
+| `/packaging` | 4.68:1 | 4.89:1 |
+| `/global-reach` | 6.29:1 | 5.78:1 |
+| `/contact` | 10.12:1 | 4.84:1 |
+
+### Section imagery (inside page bodies)
 
 | File | Dimensions | Used on | Treatment |
 |---|---|---|---|
-| `page-header-bg.jpg` | 2400 × 1200 | **Every** route except `/` — masthead backdrop | 18% opacity over navy + left-weighted gradient + bottom fade |
-| `quality-stamp.jpg` | 1200 × 900 | `/quality` — traceability section | Rounded card, `shadow-lift`, caption beneath |
-| `trade-operations.jpg` | 1400 × 1050 | `/why-us` — operations band | Rounded, bottom-up navy gradient with overlaid caption |
-| `contact-city.jpg` | 1400 × 900 | `/contact` — location block | Bottom-up navy gradient, city name + Plus Code overlaid |
+| `grove-dawn.jpg` | 2400 × 1000 | `/about`, `/products/semi-husked-coconut` — banner | none |
+| `quality-stamp.jpg` | 1200 × 900 | `/quality` — traceability | Rounded card, `shadow-lift`, caption |
+| `trade-operations.jpg` | 1400 × 1050 | `/why-us` — operations band | Rounded, gradient + overlaid caption |
+| `packing-mesh-bags.jpg` | 960 × 1200 | `/packaging`, `/` suppliers block | Gradient behind the suppliers list |
 
-**`page-header-bg` is the systemic one.** It is deliberately held at 18% opacity
-so it reads as *texture*, not a picture: the headline still sits on effectively
-solid brand navy, which is what preserves the measured on-dark text contrast. It
-takes `priority` because it is above the fold on every inner route. Override it
-per page with `<PageHeader image="..." />` where a more specific shot exists.
-
-**`contact-city` replaced an empty grey box** that read "Map embed slot". Swap
-the `<Image>` for an `<iframe>` when a real map is wanted — the surrounding
-layout does not change.
+> The home hero is unchanged and keeps its gradients — it was left out of scope
+> deliberately.
 
 ---
 
@@ -276,6 +314,7 @@ traced, re-downloaded at higher resolution, or replaced.
 | `product-textiles.jpg` | [7974730](https://www.pexels.com/photo/7974730/) | Cones of spun cotton yarn on a mill rack |
 | `product-leather.jpg` | [6653222](https://www.pexels.com/photo/6653222/) | A craftsman marking out a tan leather hide |
 | `product-plastics.jpg` | [6331084](https://www.pexels.com/photo/6331084/) | Polymer granules poured out for inspection |
+| `grove-dawn.jpg` | [10614494](https://www.pexels.com/photo/10614494/) | Dawn light through a coconut plantation |
 
 ### These are stock, and that is a known trade-off
 

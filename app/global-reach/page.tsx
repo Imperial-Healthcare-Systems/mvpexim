@@ -27,6 +27,8 @@ export default function GlobalReachPage() {
   return (
     <>
       <PageHeader
+        image="/images/hero-port.jpg"
+        imageAlt="A container terminal at dusk, cranes working a vessel alongside"
         breadcrumb={[{ label: 'Home', href: '/' }]}
         overline="Global Reach"
         title="Shipping from Indian ports to buyers across the world."

@@ -28,16 +28,25 @@ Add-Type -AssemblyName System.Drawing
 
 # Slot manifest — target sizes are the IDEAL for real photography.
 # Keep in step with IMAGES.md.
+#
+# `anchor` shifts the crop window when the subject is not centred: 'center'
+# (default), 'top', 'bottom', 'left', 'right'. Needed because several sources
+# are portrait and get cropped hard to landscape slots.
 $slots = @(
   @{ name = 'hero-port';         w = 2400; h = 1600 }
   @{ name = 'story-farm';        w = 1200; h = 1500 }
-  @{ name = 'desk-documents';    w = 1200; h = 900  }
-  @{ name = 'containers-aerial'; w = 2400; h = 900  }
+  @{ name = 'desk-documents';    w = 1200; h = 900;  anchor = 'top' }
+  @{ name = 'containers-aerial'; w = 2400; h = 900   }
   @{ name = 'packing-mesh-bags'; w = 1200; h = 1500 }
   @{ name = 'product-coconut';   w = 1200; h = 900  }
   @{ name = 'product-textiles';  w = 1200; h = 900  }
   @{ name = 'product-leather';   w = 1200; h = 900  }
   @{ name = 'product-plastics';  w = 1200; h = 900  }
+  # Added when the site moved to sourced photography.
+  @{ name = 'page-header-bg';    w = 2400; h = 1200 }
+  @{ name = 'quality-stamp';     w = 1200; h = 900  }
+  @{ name = 'contact-city';      w = 1400; h = 900  }
+  @{ name = 'trade-operations';  w = 1400; h = 1050 }
 )
 
 $root   = Split-Path -Parent $PSScriptRoot
@@ -81,8 +90,14 @@ foreach ($slot in $slots) {
       $cropW = $img.Width
       $cropH = [int][math]::Round($img.Width / $targetRatio)
     }
-    $cropX = [int](($img.Width  - $cropW) / 2)
-    $cropY = [int](($img.Height - $cropH) / 2)
+    $anchor = if ($slot.ContainsKey('anchor')) { $slot.anchor } else { 'center' }
+    switch ($anchor) {
+      'left'   { $cropX = 0;                            $cropY = [int](($img.Height - $cropH) / 2) }
+      'right'  { $cropX = $img.Width - $cropW;          $cropY = [int](($img.Height - $cropH) / 2) }
+      'top'    { $cropX = [int](($img.Width - $cropW)/2); $cropY = 0 }
+      'bottom' { $cropX = [int](($img.Width - $cropW)/2); $cropY = $img.Height - $cropH }
+      default  { $cropX = [int](($img.Width - $cropW)/2); $cropY = [int](($img.Height - $cropH)/2) }
+    }
 
     # Never enlarge: cap the output at the cropped source size.
     $outW = [math]::Min($slot.w, $cropW)

@@ -79,8 +79,8 @@ export default function AboutPage() {
           <Reveal delay={0.1}>
             <PlaceholderImage
               src="/images/story-farm.jpg"
-              alt="Growers sorting freshly harvested coconuts at a farm near Pollachi, Tamil Nadu"
-              label="Coconut sorting at a Pollachi farm"
+              alt="A grower opening a freshly harvested coconut by hand at a smallholding"
+              label="Coconut harvest, by hand"
               width={1200}
               height={1500}
               sizes="(min-width: 1024px) 42vw, 100vw"

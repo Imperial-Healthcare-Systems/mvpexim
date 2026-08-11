@@ -66,8 +66,8 @@ headline sits there. Landscape, horizon low.
 | **Used on** | `/` (story teaser), `/about` (story column) |
 | **Source** | `app/page.tsx`, `app/about/page.tsx` |
 | **Loading** | lazy |
-| **Alt** | "Growers sorting freshly harvested coconuts at a farm near Pollachi, Tamil Nadu" |
-| **Placeholder label** | "Coconut sorting at a Pollachi farm" |
+| **Alt** | "A grower opening a freshly harvested coconut by hand at a smallholding" |
+| **Placeholder label** | "Coconut harvest, by hand" |
 
 **Intended image:** Documentary-style portrait shot of growers hand-sorting
 freshly harvested coconuts outdoors. Natural daylight, real hands and real
@@ -114,8 +114,8 @@ stock-portrait look.
 | **Used on** | `/global-reach` — full-width band below the ports grid |
 | **Source** | `app/global-reach/page.tsx` |
 | **Loading** | lazy |
-| **Alt** | "Aerial view of a shipping container yard at an Indian port, with stacked containers and gantry cranes" |
-| **Placeholder label** | "Container yard at an Indian port" |
+| **Alt** | "Aerial night view of a container vessel being worked alongside a lit terminal" |
+| **Placeholder label** | "Night loading at a container terminal" |
 
 **Intended image:** High aerial / drone view straight down or at a steep angle
 over stacked containers. Graphic, grid-like, almost abstract. Cool daylight.
@@ -132,14 +132,16 @@ Wide panoramic crop — do not supply a square image, it will crop badly.
 | **Used on** | `/packaging` |
 | **Source** | `app/packaging/page.tsx` |
 | **Loading** | lazy |
-| **Alt** | "Semi-husked coconuts being packed into 12.5 kg mesh bags and stacked for container stuffing" |
-| **Placeholder label** | "Packing into 12.5 kg mesh bags" |
+| **Alt** | "Semi-husked coconuts heaped after grading, ready for bagging" |
+| **Placeholder label** | "Graded coconut, ready for bagging" |
 
 **Intended image:** Hands filling or tying a 12.5 kg mesh bag with semi-husked
 coconuts, with stacked filled bags behind. Working shot, not a styled still —
 this is the image that proves packing is real. Natural light, portrait crop.
 
-> This file does not exist yet — the slot currently shows its placeholder.
+> ⚠️ The current photograph shows **graded coconut, not bagged coconut** — see
+> "Still outstanding" under Provenance. It is also reused on `/` in the
+> growers-and-suppliers block.
 
 ---
 
@@ -161,7 +163,7 @@ and `products[].imageLabel`. Change them there, in one place, and every usage
 updates.
 
 ### 5. Semi-husked coconut — `product-coconut.jpg`
-- **Alt:** "Semi-husked coconuts in biscuit-colour grade, stacked in 12.5 kg mesh bags ready for container loading"
+- **Alt:** "Biscuit-colour semi-husked coconuts stacked in bulk after grading"
 - **Also used on:** `/products/semi-husked-coconut` with `priority` (above the fold)
 - **Intended image:** Close, well-lit product shot of semi-husked coconuts at
   biscuit-colour grade, in or beside the 12.5 kg mesh bags they ship in. Must
@@ -169,17 +171,17 @@ updates.
   product — the single most important image on the site after the hero.
 
 ### 6. Textiles, yarn & garments — `product-textiles.jpg`
-- **Alt:** "Rolls of cotton yarn and folded finished garments in an Indian textile facility"
+- **Alt:** "Cones of spun cotton yarn racked in a textile mill"
 - **Intended image:** Cones of cotton yarn stacked on a rack, or neatly folded
   finished garments. Clean industrial setting, soft daylight, orderly.
 
 ### 7. Leather & footwear — `product-leather.jpg`
-- **Alt:** "Finished leather hides and manufactured footwear at an Indian tannery workshop"
+- **Alt:** "A craftsman marking out a finished tan leather hide"
 - **Intended image:** Finished leather hides with visible grain, ideally beside
   a finished shoe. Rich browns and tans, craft-workshop feel, warm light.
 
 ### 8. Plastics & polymers — `product-plastics.jpg`
-- **Alt:** "Industrial polymer granules in bulk sacks at a plastics processing plant"
+- **Alt:** "Industrial polymer granules poured out for inspection"
 - **Intended image:** Polymer granules close up — pouring, in a scoop, or in
   open bulk sacks. Clean, technical, neutral colour. The most industrial image
   in the set; keep it cool-toned against the warm agricultural ones.
@@ -225,6 +227,81 @@ bought nothing but a failure mode.
 > serif available to GDI+. If you want true Fraunces on the card, produce it in
 > a design tool at 1200 × 630 and overwrite `public/og.png` — nothing in the
 > code needs to change.
+
+---
+
+## 9–12. Added with the sourced-photography pass
+
+| File | Dimensions | Used on | Treatment |
+|---|---|---|---|
+| `page-header-bg.jpg` | 2400 × 1200 | **Every** route except `/` — masthead backdrop | 18% opacity over navy + left-weighted gradient + bottom fade |
+| `quality-stamp.jpg` | 1200 × 900 | `/quality` — traceability section | Rounded card, `shadow-lift`, caption beneath |
+| `trade-operations.jpg` | 1400 × 1050 | `/why-us` — operations band | Rounded, bottom-up navy gradient with overlaid caption |
+| `contact-city.jpg` | 1400 × 900 | `/contact` — location block | Bottom-up navy gradient, city name + Plus Code overlaid |
+
+**`page-header-bg` is the systemic one.** It is deliberately held at 18% opacity
+so it reads as *texture*, not a picture: the headline still sits on effectively
+solid brand navy, which is what preserves the measured on-dark text contrast. It
+takes `priority` because it is above the fold on every inner route. Override it
+per page with `<PageHeader image="..." />` where a more specific shot exists.
+
+**`contact-city` replaced an empty grey box** that read "Map embed slot". Swap
+the `<Image>` for an `<iframe>` when a real map is wanted — the surrounding
+layout does not change.
+
+---
+
+## Provenance & licence
+
+All photography is sourced from **[Pexels](https://www.pexels.com)** under the
+[Pexels License](https://www.pexels.com/license/): free for commercial use, no
+attribution required, modification permitted. Each file below has been
+centre-cropped and resized by `scripts/fit-images.ps1`; nothing else was altered.
+
+Attribution is not required, but the source ID is recorded so any image can be
+traced, re-downloaded at higher resolution, or replaced.
+
+| File | Pexels photo | Shows |
+|---|---|---|
+| `hero-port.jpg` | [21234960](https://www.pexels.com/photo/21234960/) | Container terminal at dusk, warm lights on water |
+| `page-header-bg.jpg` | [35458829](https://www.pexels.com/photo/35458829/) | Harbour crane against low sun — masthead backdrop |
+| `containers-aerial.jpg` | [16229885](https://www.pexels.com/photo/16229885/) | Aerial night view of a vessel being worked |
+| `story-farm.jpg` | [28625589](https://www.pexels.com/photo/28625589/) | A grower opening a coconut by hand |
+| `product-coconut.jpg` | [7543134](https://www.pexels.com/photo/7543134/) | De-husked coconuts stacked in bulk |
+| `packing-mesh-bags.jpg` | [5608054](https://www.pexels.com/photo/5608054/) | Semi-husked coconuts heaped after grading |
+| `desk-documents.jpg` | [8872719](https://www.pexels.com/photo/8872719/) | Hands with an invoice folder on a wooden desk |
+| `quality-stamp.jpg` | [18687845](https://www.pexels.com/photo/18687845/) | Date stamp resting on completed forms |
+| `trade-operations.jpg` | [25153797](https://www.pexels.com/photo/25153797/) | Containers lit alongside a vessel at night |
+| `contact-city.jpg` | [14845309](https://www.pexels.com/photo/14845309/) | Bengaluru skyline at dusk |
+| `product-textiles.jpg` | [7974730](https://www.pexels.com/photo/7974730/) | Cones of spun cotton yarn on a mill rack |
+| `product-leather.jpg` | [6653222](https://www.pexels.com/photo/6653222/) | A craftsman marking out a tan leather hide |
+| `product-plastics.jpg` | [6331084](https://www.pexels.com/photo/6331084/) | Polymer granules poured out for inspection |
+
+### These are stock, and that is a known trade-off
+
+Questionnaire §10.7 warns that "stock images of containers are the fastest way
+to look like every other trading company". These were chosen to push against
+that — specific, editorial, warm-graded, and matched to the adjacent copy rather
+than generic — but they are still stock, and a buyer who reverse-searches will
+find them elsewhere.
+
+They are a deliberate interim step up from the generated placeholders. Real
+photographs of your own consignments, packing and loading remain the goal, and
+every slot swaps in one file operation.
+
+### Alt text describes the sourced image, not the ideal one
+
+Several alt strings were rewritten when these images landed, because the
+original wording described photographs we do not have. `product-coconut` no
+longer claims "12.5 kg mesh bags" (the shot is bulk-stacked), `product-leather`
+no longer claims footwear, and `product-textiles` no longer claims garments.
+Restore the fuller descriptions when real photography arrives.
+
+**Still outstanding:** no image on the site shows the 12.5 kg mesh bag the
+product actually ships in. Searches for mesh/net sacks returned only consumer
+shopping bags, and the jute-sack alternatives all carried other companies'
+branding. `/packaging` therefore shows graded coconut rather than bagged
+coconut. This is the single most valuable photograph you could supply.
 
 ---
 

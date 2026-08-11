@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowRight, CircleDashed, FileText, Radar, ShieldCheck } from 'lucide-react'
 
 import { PageHeader } from '@/components/primitives/page-header'
+import { PlaceholderImage } from '@/components/primitives/placeholder-image'
 import { Reveal, Stagger, StaggerItem } from '@/components/primitives/reveal'
 import { Section } from '@/components/primitives/section'
 import { Card, Pill } from '@/components/primitives/surface'
@@ -43,10 +44,8 @@ export default function QualityPage() {
               title="End-to-end visibility, source to dispatch"
             />
             <p className="mt-6 text-lede text-pretty text-ink-muted">{traceability}</p>
-          </Reveal>
 
-          <Reveal delay={0.1}>
-            <Card className="h-full">
+            <Card className="mt-8">
               <Radar aria-hidden="true" className="size-6 text-brand-accent" />
               <h2 className="mt-5 font-serif text-heading font-semibold text-surface-dark">
                 Why it matters to you
@@ -57,6 +56,22 @@ export default function QualityPage() {
                 difference between a claim resolved in days and one resolved in weeks.
               </p>
             </Card>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <PlaceholderImage
+              src="/images/quality-stamp.jpg"
+              alt="A date stamp resting on completed export declaration forms at a documentation desk"
+              label="Export documentation being stamped"
+              width={1200}
+              height={900}
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="shadow-lift"
+            />
+            <p className="mt-4 text-caption text-ink-subtle">
+              Every consignment carries a phytosanitary certificate, attested before
+              loading.
+            </p>
           </Reveal>
         </div>
       </Section>

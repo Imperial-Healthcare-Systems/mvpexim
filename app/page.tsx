@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   Anchor,
@@ -64,8 +65,8 @@ export default function HomePage() {
           <Reveal delay={0.1}>
             <PlaceholderImage
               src="/images/story-farm.jpg"
-              alt="Growers sorting freshly harvested coconuts at a farm near Pollachi, Tamil Nadu"
-              label="Coconut sorting at a Pollachi farm"
+              alt="A grower opening a freshly harvested coconut by hand at a smallholding"
+              label="Coconut harvest, by hand"
               width={1200}
               height={1500}
               sizes="(min-width: 1024px) 45vw, 100vw"
@@ -217,9 +218,9 @@ export default function HomePage() {
           statement (§9). */}
       <Section tone="sunken">
         <Reveal>
-          <Card className="lg:p-12">
-            <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-              <div>
+          <Card padded={false} className="overflow-hidden">
+            <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
+              <div className="p-7 lg:p-12">
                 <Overline>Growers &amp; Suppliers</Overline>
                 <h2 className="mt-3 max-w-xl font-serif text-display-sm font-bold text-balance text-surface-dark">
                   If you grow it or make it, we are looking for you too.
@@ -247,34 +248,50 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <ul className="flex flex-col gap-5 border-line lg:border-l lg:pl-12">
-                {[
-                  {
-                    title: 'Fair dealing, stated plainly',
-                    detail:
-                      'Transparency with growers, suppliers and buyers is our cornerstone — it is one of our five values, not a line on a wall.',
-                  },
-                  {
-                    title: 'One shared record',
-                    detail:
-                      'From source to dispatch we work on a single platform with real-time data, so you can see where your consignment is.',
-                  },
-                  {
-                    title: 'Honest specification',
-                    detail:
-                      'We do not oversell a grade to a buyer, which means we will not ask you to supply one.',
-                  },
-                ].map((item) => (
-                  <li key={item.title}>
-                    <h3 className="font-serif text-heading-sm font-semibold text-surface-dark">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1.5 text-body text-pretty text-ink-muted">
-                      {item.detail}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              {/* Was a bare list in a text-only card. Backing it with the
+                  produce a grower actually supplies gives the block a subject
+                  and balances the column of copy beside it. */}
+              <div className="relative isolate min-h-[22rem] lg:min-h-full">
+                <Image
+                  src="/images/packing-mesh-bags.jpg"
+                  alt="Semi-husked coconuts heaped after grading, ready for bagging"
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="-z-10 object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 -z-10 bg-gradient-to-t from-surface-dark/92 via-surface-dark/75 to-surface-dark/45"
+                />
+                <ul className="flex h-full flex-col justify-center gap-5 p-7 lg:p-10">
+                  {[
+                    {
+                      title: 'Fair dealing, stated plainly',
+                      detail:
+                        'Transparency with growers, suppliers and buyers is our cornerstone — a value, not a line on a wall.',
+                    },
+                    {
+                      title: 'One shared record',
+                      detail:
+                        'From source to dispatch we work on a single platform, so you can see where your consignment is.',
+                    },
+                    {
+                      title: 'Honest specification',
+                      detail:
+                        'We do not oversell a grade to a buyer, so we will not ask you to supply one.',
+                    },
+                  ].map((item) => (
+                    <li key={item.title}>
+                      <h3 className="font-serif text-heading-sm font-semibold text-on-dark">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1.5 text-body text-pretty text-on-dark-muted">
+                        {item.detail}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </Card>
         </Reveal>

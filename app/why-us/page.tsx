@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowRight,
@@ -187,10 +188,8 @@ export default function WhyUsPage() {
             <div className="mt-10">
               <SpecList items={operations} columns={2} tone="dark" />
             </div>
-          </Reveal>
 
-          <Reveal delay={0.1}>
-            <Card tone="dark">
+            <Card tone="dark" className="mt-10">
               <h2 className="font-serif text-heading-sm font-semibold text-on-dark">
                 Documents with every shipment
               </h2>
@@ -212,6 +211,29 @@ export default function WhyUsPage() {
                 <ArrowRight data-icon="inline-end" />
               </Button>
             </Card>
+          </Reveal>
+
+          {/* This page is otherwise an unbroken run of cards and lists — the
+              longest on the site. One image gives the eye somewhere to rest. */}
+          <Reveal delay={0.1}>
+            <div className="relative isolate overflow-hidden rounded-2xl shadow-lift">
+              <Image
+                src="/images/trade-operations.jpg"
+                alt="Containers stacked and lit alongside a cargo vessel during night loading operations"
+                width={1400}
+                height={1050}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="h-full w-full object-cover"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-surface-dark/80 via-surface-dark/10 to-transparent"
+              />
+              <p className="absolute inset-x-0 bottom-0 p-6 text-caption text-on-dark-muted">
+                Loading windows are confirmed with your quotation, 30–45 days from a
+                confirmed order.
+              </p>
+            </div>
           </Reveal>
         </div>
       </Section>

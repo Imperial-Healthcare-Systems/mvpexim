@@ -76,8 +76,8 @@ export default function PackagingPage() {
           <Reveal delay={0.1}>
             <PlaceholderImage
               src="/images/packing-mesh-bags.jpg"
-              alt="Semi-husked coconuts being packed into 12.5 kg mesh bags and stacked for container stuffing"
-              label="Packing into 12.5 kg mesh bags"
+              alt="Semi-husked coconuts heaped after grading, ready for bagging"
+              label="Graded coconut, ready for bagging"
               width={1200}
               height={1500}
               sizes="(min-width: 1024px) 45vw, 100vw"

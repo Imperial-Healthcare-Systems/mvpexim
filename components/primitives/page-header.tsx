@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import type { ReactNode } from 'react'
@@ -21,12 +22,15 @@ export function PageHeader({
   lede,
   breadcrumb,
   children,
+  image = '/images/page-header-bg.jpg',
 }: {
   overline?: string
   title: ReactNode
   lede?: ReactNode
   breadcrumb?: { label: string; href: string }[]
   children?: ReactNode
+  /** Masthead backdrop. Override per route where a more specific shot exists. */
+  image?: string
 }) {
   /**
    * BreadcrumbList structured data, derived from the same array that renders
@@ -64,10 +68,36 @@ export function PageHeader({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       )}
+
+      {/* Masthead photography. Held at 18% over navy so it reads as texture
+          rather than a picture — the headline still sits on effectively solid
+          brand navy, which is what keeps on-dark text at its measured contrast.
+          `priority` because this is above the fold on every inner route. */}
+      <Image
+        src={image}
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        sizes="100vw"
+        className="pointer-events-none -z-20 object-cover opacity-[0.18]"
+      />
+
+      {/* Navy wash over the photograph: heavier on the left where the copy
+          sits, lifting to the right so the image still reads. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-surface-dark via-surface-dark/90 to-surface-dark/60"
+      />
       {/* Soft radial lift so the flat navy doesn't read as a solid slab. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(90rem_40rem_at_15%_-10%,oklch(0.42_0.08_258/0.55),transparent_60%)]"
+      />
+      {/* Fade into whatever section follows. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-b from-transparent to-surface-dark"
       />
 
       <Container>

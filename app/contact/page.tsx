@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Clock, Languages, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 
 import { PageHeader } from '@/components/primitives/page-header'
@@ -93,11 +94,31 @@ export default function ContactPage() {
                   </a>
                 </div>
               </div>
-              <div
-                aria-hidden="true"
-                className="flex h-44 items-center justify-center border-t border-line bg-surface-sunken text-caption text-ink-subtle"
-              >
-                Map embed slot — Plus Code {siteConfig.address.mapsQuery}
+              {/* Was an empty grey "map embed slot". Until a real map is
+                  embedded this carries a photograph of the city we trade from,
+                  with the Plus Code overlaid — the slot still reads as
+                  location, but it looks intentional. Swap the <Image> for an
+                  <iframe> and the layout is unchanged. */}
+              <div className="relative isolate h-48 border-t border-line">
+                <Image
+                  src="/images/contact-city.jpg"
+                  alt="The Bengaluru skyline at dusk, the city MVP Exim trades from"
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="-z-10 object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 -z-10 bg-gradient-to-t from-surface-dark/85 via-surface-dark/40 to-surface-dark/10"
+                />
+                <div className="flex h-full flex-col justify-end p-5">
+                  <p className="text-caption font-semibold uppercase tracking-wide text-gold">
+                    {siteConfig.address.city}, {siteConfig.address.state}
+                  </p>
+                  <p className="tabular mt-1 text-caption text-on-dark-muted">
+                    Plus Code {siteConfig.address.mapsQuery}
+                  </p>
+                </div>
               </div>
             </Card>
           </Reveal>

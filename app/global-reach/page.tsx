@@ -61,8 +61,8 @@ export default function GlobalReachPage() {
         <Reveal delay={0.1} className="mt-12">
           <PlaceholderImage
             src="/images/containers-aerial.jpg"
-            alt="Aerial view of a shipping container yard at an Indian port, with stacked containers and gantry cranes"
-            label="Container yard at an Indian port"
+            alt="Aerial night view of a container vessel being worked alongside a lit terminal"
+            label="Night loading at a container terminal"
             width={2400}
             height={900}
             sizes="(min-width: 1024px) 80rem, 100vw"
